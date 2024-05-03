@@ -1,0 +1,421 @@
+{%extends 'main/main.html'%}
+{% load static %}
+
+{%block title%}
+Update{%endblock title%}
+
+{% block css%}
+<style>
+  *{
+    color: whitesmoke;
+  }
+  body {
+    font-family: 'Times New Roman', Times, serif;
+    background: #f0f0f0; /* Changed background color */
+    background: url('{% static "img/bg.jpg" %}') no-repeat fixed center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    color: whitesmoke;
+}
+
+.navbar {
+    position: relative;
+    background-image: url('{% static "img/S.png" %}');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;
+    z-index: 0;
+}
+
+/* Color overlay */
+.navbar::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(32, 152, 209, 0.7);
+    z-index: -1; /* Ensure the overlay is behind the navbar content */
+}
+
+/* Navbar button styling */
+.navbar .navbar-nav .nav-link {
+    padding: 10px 20px; /* Adjust button padding as needed */
+    border-radius: 5px; /* Button border radius */
+    position: relative;
+    z-index: 2; /* Ensure buttons are on top of the overlay */
+}
+
+.navbar a:hover {
+    color: #c9cdd1;
+}
+
+/* Image with shadow */
+.image-with-shadow {
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1); /* Adjust shadow color and size as needed */
+}
+
+.sidebar li {
+    padding: 15px; /* Adjusted padding */
+    margin-right: 20px;
+    margin-left: 10px;
+}
+
+.sidebar li a {
+    text-decoration: none;
+    color: #333; /* Changed sidebar link color */
+}
+
+.sidebar li:hover {
+    background-color: #eee; /* Change background color on hover */
+    border-radius: 5px; /* Add rounded corners on hover */
+}
+
+.sidebar li a:hover {
+    color: #007bff; /* Change link color on hover */
+}
+
+.j {
+    margin-left: 145px;
+}
+
+.con {
+    background-color: transparent;
+    opacity: 0.9;
+    border-color: #333;
+}
+.a{
+    margin-left: 550px;
+}
+.sc{
+  font-size: 1.2rem;
+}
+</style>
+
+{%endblock css%}
+
+
+{%block content%}
+<div class="container-fluid">
+  <div class="row">
+      <!-- side menu -->
+      <div class="col-2">
+        <!-- <button class="btn btn-primary mt-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+          Menus
+        </button> -->
+        
+        <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="staticBackdropLabel">
+                <img  src="{% static 'img/logo1.jpg' %}" alt="Logo" class="ms-5 image-with-shadow" style="width: 150px; height: 55px;">
+            </h5>
+            <br>
+          
+
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <div>
+              <ul class="nav sidebar">
+                <li><a href="">OPTION</a></li>
+                <li><a href="">OPTION</a></li>
+                <li><a href="">OPTION</a></li>
+                <li><a href="">OPTION</a></li>
+                <li><a href="">OPTION</a></li>
+                <li><a href="">OPTION</a></li>
+                <li><a href="">OPTION</a></li>
+                <li><a href="">OPTION</a></li>
+                <li><a href="">OPTION</a></li>
+              </ul>              </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col p-5 con">
+
+
+          <form action="{% url 'update_profile' student.Adno %}" id="myForm" method='POST' onsubmit="return validateForm(event)" autocomplete="off">
+              {% csrf_token %}
+              <div class="container  p-5">
+                <div class="row g-4">
+                  <h1 class="heading">Student Profile</h1>
+                  <div class="sc">
+
+                
+                  <div class="col-auto">
+                    <label for="regno" class="form-label  fw-bold">Regno:</label>
+            <label class="form-label fw-bold">{{ student.RegNo }}</label>
+            <input type="hidden" name="regno" value="{{ student.RegNo }}">
+            <br>
+            <label for="name" class="form-label  fw-bold">Name:</label>
+            <label class="form-label  fw-bold">{{ student.StudentName }}</label>
+            <input type="hidden" name="student_Name" value="{{ student.StudentName }}">
+            <br>
+            <label for="dummy1" class="form-label fw-bold ">Section:</label>
+            <label class="form-label  fw-bold">{{ student.Section }}</label>
+            <input type="hidden" name="student_twelfth_mark" value="{{ student.Section }}">
+          </div>
+  
+          <div class="col">
+            <label for="dummy2" class="form-label fw-bold ">Program:</label>
+            <label class="form-label  fw-bold">{{ program }}</label>
+            <input type="hidden" name="student_batch" value="{{ student.Dcode }}">
+            <br>
+            <label for="dummy3" class="form-label fw-bold ">Batch:</label>
+            <label class="form-label fw-bold ">{{ student.Batch }}</label>
+                  </div>  </div>
+                </div>
+                <hr>
+                <!-- Input fields -->
+              <div class="row">
+                  <div class="col-auto">
+                    <label for="10th" class="form-label fs-3">10th Mark:</label>
+                    <input name="tenth" class="form-control mb-2" id="10th" placeholder="Enter Your 10th Mark" required>
+                    <label for="Skills_Acquired" class="form-label fs-3">Skills Acquired:</label>
+          
+          
+                    <div class="input-container d-inline" id="skillsContainer">
+                      <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Enter Skills Acquired" required>
+                        <select class="form-select" id="dropdownValue" required>
+                          <option value="1">Advance</option>
+                          <option value="2">Intermediate</option>
+                          <option value="3">Beginner</option>
+                        </select>
+                        <button class="btn btn-success fs-3 fw-bold" onclick="addSkillInput(event)">+</button>
+                      </div>
+                    </div>
+          
+                    
+                    <!-- Known skills -->
+                    <div id="output-container">
+                      <input type="hidden" id="hiddenSkills" class="form-control" name="aquer_skills">
+                      <ul id="skillList" class="list-group"></ul>
+                    </div>
+                   
+          
+                  
+                    <label for="inputValue2" class="form-label fs-4">Skills Required:</label>
+                    <div class="input-container">
+                      <div class="input-group mb-3 ">
+                          <input type="text" id="ii" class="form-control" placeholder="Enter Skills Acquired" required>
+                          <button class="btn btn-success fs-3 fw-bold" onclick="addInput(event)">+</button>
+                      </div>
+                    </div>
+                    <!-- Requested skills -->
+                    <div id="output-container2">
+                      <!-- No UL list for requested skills -->
+                      <input type="hidden" id="hiddenInput" class="form-control" name="required_skills">
+                    </div>
+                  </div>
+              </div>
+                <!-- Radio buttons -->
+                <div class="row">
+                  <label for="inputValue2"  class="form-label fs-4">Focus:</label>
+          
+                  <div class="col-auto mb-3">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="focus" id="reqOption1" value="1"> Placement
+                    </label>
+                  </div>
+            
+                  <div class="mb-3">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="focus" id="reqOption2" value="2"> Higher Studies
+                    </label>
+                  </div>
+            
+                  <div class="mb-3">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="focus" id="reqOption3" value="3"> Entrepreneur
+                    </label>
+                  </div>
+                </div>
+          
+          
+                <!-- Submit button -->
+                <div class="row mt-3">
+                  <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+      </div>
+
+  </div>    
+      <!-- content -->
+</div>  
+
+
+
+<script>
+  function addSkillInput(event) {
+  event.preventDefault();
+  var skillsContainer = document.getElementById('skillsContainer');
+  var newInputContainer = document.createElement('div');
+  newInputContainer.className = 'input-group mb-3';
+  newInputContainer.innerHTML = `
+  <input type="text" class="form-control" placeholder="Enter Skills Acquired" required>
+  <select class="form-select" id="dropdownValue" required>
+    <option value="1">Advance</option>
+    <option value="2">Intermediate</option>
+    <option value="3">Beginner</option>
+  </select>
+  <button class="btn btn-danger fs-3 fw-bold" onclick="removeInput(event)">-</button>
+  
+  `;
+  skillsContainer.appendChild(newInputContainer);
+  }
+  
+  function removeInput(event) {
+  event.target.parentElement.remove();
+  }
+  
+  function updateSkills() {
+  const skillsContainer = document.getElementById('skillsContainer');
+  const inputs = skillsContainer.querySelectorAll('input[type="text"]');
+  const dropdowns = skillsContainer.querySelectorAll('select');
+  
+  const hiddenInput = document.getElementById('hiddenSkills');
+  let hiddenSkills = '';
+  
+  inputs.forEach((input, index) => {
+  if (input.value.trim() !== '') {
+    const skillValue = input.value.trim();
+    const dropdownValue = dropdowns[index].value;
+    hiddenSkills += `${skillValue}${dropdownValue},`;
+  }
+  });
+  
+  hiddenInput.value = hiddenSkills.slice(0, -1);
+  alert(hiddenInput.value);
+  }
+  
+  function updateRequestedSkills() {
+  let i=document.getElementById('ii').value
+  const requestedSkillsContainer = document.getElementById('output-container2');
+  const requestedSkillsInputs = requestedSkillsContainer.querySelectorAll('input[type="text"]');
+  const hiddenInput = document.getElementById('hiddenInput');
+  let requestedSkills = '';
+  hiddenInput.value=i
+  
+  
+  requestedSkillsInputs.forEach((input) => {
+    if (input.value.trim() !== '') {
+      requestedSkills += `,${input.value.trim()},`;
+    }
+  });
+  
+  hiddenInput.value += requestedSkills.slice(0, -1);
+  
+  }
+  
+  
+  function addInput(event) {
+  event.preventDefault();
+  
+  var skillsContainer = document.getElementById('output-container2');
+  var newInputContainer = document.createElement('div');
+  newInputContainer.className = 'input-group mb-3';
+  newInputContainer.innerHTML = `
+  <input type="text" class="form-control" placeholder="Enter Skills Acquired" required>
+  <button class="btn btn-danger fs-3 fw-bold" onclick="removeInput(event)">-</button>
+  
+  `;
+  skillsContainer.appendChild(newInputContainer);
+  
+  // Update hidden input value
+  if (inputValue.trim() !== '') {
+  updateRequestedSkills();
+  }
+  }
+  
+  function validateForm(event) {
+  updateSkills();
+  updateRequestedSkills();
+  
+  const knowsSkills = document.getElementById('hiddenSkills').value;
+  const requestSkills = document.getElementById('hiddenInput').value;
+  const tenMark = document.getElementById('10th').value;
+  const focus = document.getElementById('focus');
+  
+  if (knowsSkills.trim() === '' || requestSkills.trim() === '' || tenMark.trim() === '') {
+  alert('Enter all ');
+  event.preventDefault();
+  return false;
+  } else if (tenMark > 500) {
+  alert('Enter a valid 10th Mark');
+  event.preventDefault();
+  return false;
+  }
+  
+  let selectedOptions = '';
+  
+  const radioButtons = document.querySelectorAll('input[name="skills_required"]');
+  radioButtons.forEach((radio) => {
+  if (radio.checked) {
+    selectedOptions = radio.value;
+  }
+  });
+  alert(hiddenInput.value)
+  
+  
+  console.log('Selected Options:', selectedOptions);
+  focus.value = selectedOptions;
+  return true;
+  }
+  </script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Code injected by live-server -->
+  <script>
+    // <![CDATA[  <-- For SVG support
+    if ('WebSocket' in window) {
+      (function () {
+        function refreshCSS() {
+          var sheets = [].slice.call(document.getElementsByTagName("link"));
+          var head = document.getElementsByTagName("head")[0];
+          for (var i = 0; i < sheets.length; ++i) {
+            var elem = sheets[i];
+            var parent = elem.parentElement || head;
+            parent.removeChild(elem);
+            var rel = elem.rel;
+            if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+              var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+              elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+            }
+            parent.appendChild(elem);
+          }
+        }
+        var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+        var address = protocol + window.location.host + window.location.pathname + '/ws';
+        var socket = new WebSocket(address);
+        socket.onmessage = function (msg) {
+          if (msg.data == 'reload') window.location.reload();
+          else if (msg.data == 'refreshcss') refreshCSS();
+        };
+        if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+          console.log('Live reload enabled.');
+          sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+        }
+      })();
+    }
+    else {
+      console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+    }
+    // ]]>
+  </script>
+  
+{%endblock content%}
+
+
+  
+  
+
+
+

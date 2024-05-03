@@ -1,0 +1,236 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <!-- Bootstrap CSS -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<style>
+  body {
+    font-family: 'Times New Roman', Times, serif;
+    /* Use absolute path for background image */
+    background: url('{% static "/img/bg.jpg" %}') no-repeat fixed center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    color: whitesmoke;
+}
+
+.navbar,.card-header {
+    position: relative;
+    /* Relative path is fine for the navbar background image */
+    background-image: url('{% static "img/S.png" %}');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;
+    z-index: 0;
+}
+
+.h{
+  color: whitesmoke;
+}
+.b{
+  background-color: rgba(32, 152, 209, 0.7);
+  color: whitesmoke;
+}
+.custom-alert {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.custom-alert.show {
+  opacity: 1;
+}
+
+
+</style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-dark navbar-expand-lg bg-dark">
+    <div class="container-fluid d-flex justify-content-center">
+      <a class="navbar-brand" href="#">
+        <img src="{% static 'img/logo1.jpg' %}" alt="Logo" class="ms-5 image-with-shadow" style="width: 150px; height: 55px;">
+      </a>
+      <h1 class='ms-3 f-4 h'>
+
+      </h1>
+      {% comment %} <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+           <li class="nav-item">
+            <a class="nav-link active ms-3" aria-current="page" href="#"><i class="fas fa-tachometer-alt"></i> OPTION</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ms-3" aria-current="page" href="#"><i class="fas fa-users"></i> OPTION</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ms-3" href="#"><i class="fas fa-user"></i> OPTION</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ms-3" href="#"><i class="fas fa-question-circle"></i> OPTION</a>
+          </li>
+        </ul>
+        <div class="navbar-nav navbar-right">
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-user-plus"></i> OPTION</a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-cart-plus"></i> OPTION</a>
+          </li>  
+
+        </div>
+      </div> {% endcomment %}
+    </div>
+  </nav>
+  
+  <div class="container-fluid">
+    <div class="row">
+        <!-- side menu -->
+        <div class="col-12">
+          {% comment %} <button class="btn btn-primary mt-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+            Menus
+          </button> {% endcomment %}
+          
+          <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="staticBackdropLabel">
+                  <img  src="{% static 'img/logo1.jpg' %}" alt="Logo" class="ms-5 image-with-shadow" style="width: 150px; height: 55px;">
+              </h5>
+              <br>
+            
+
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <div>
+                <ul class="nav sidebar">
+                  <li><a href="">OPTION</a></li>
+                  <li><a href="">OPTION</a></li>
+                  <li><a href="">OPTION</a></li>
+                  <li><a href="">OPTION</a></li>
+                  <li><a href="">OPTION</a></li>
+                  <li><a href="">OPTION</a></li>
+                  <li><a href="">OPTION</a></li>
+                  <li><a href="">OPTION</a></li>
+                  <li><a href="">OPTION</a></li>
+                </ul>              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-5 p-5 con">                  
+             
+                 
+              
+        </div>
+
+    </div>   
+    <div class="container">
+      <div class="row justify-content-center mt-3">
+        <div class="col-md-6">
+
+        
+        
+          <div class="card">
+            <div class="card-header bg-primary text-white text-center">
+              <h3>Login</h3>
+            </div>
+            <div class="card-body">
+              <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="regno" class="form-label fs-5">Enter User Id</label>
+                  <input name="regno" type="text" class="fs-5 form-control" id="regno" placeholder="User Id" required>
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="fs-5 form-label">Password</label>
+                  <input type="password" name="password" class="fs-5 form-control" id="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-lg btn-block fs-6 b"> <i class="fas fa-sign-in-alt"></i> Submit</button>
+              </form>
+
+            </div>
+          </div>
+          <div class="mt-2">
+            <!-- Render messages if any -->
+            {% for message in messages %}
+            <div class="alert alert-danger alert-dismissible fade show custom-alert" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+        
+        </div>
+        </div>
+      </div>
+    </div>
+    
+
+        <!-- content -->
+  </div>     
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Code injected by live-server -->
+<script>
+
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+</html>

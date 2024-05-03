@@ -1,0 +1,131 @@
+{% extends 'main/main.html' %}
+
+{% load static %}
+
+{% block title %}
+Profile
+{% endblock title %}
+
+{% block css %}
+<style>
+  body {
+    font-family: 'Times New Roman', Times, serif;
+    background: url('{% static "/img/bg.jpg" %}') no-repeat fixed center;
+    background-size: cover;
+    color: whitesmoke;
+    margin: 0;
+    padding: 0;
+  }
+
+  .big {
+    font-size: 2.5rem; /* Adjusted font size for heading */
+    margin-top: 20px;
+  }
+
+  .navbar,
+  .con1 {
+    position: relative;
+    background-image: url('{% static "img/S.png" %}');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;
+    z-index: 0;
+    padding: 20px; /* Added padding for better spacing */
+    border-radius: 10px; /* Added border radius for a softer look */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Added box shadow for depth */
+  }
+
+  .con1::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(32, 152, 209, 0.7);
+    z-index: -1;
+  }
+
+  .card-text {
+    font-size: 1.2rem; /* Adjusted font size for text */
+    margin-bottom: 10px; /* Added margin for better separation */
+  }
+
+  hr {
+    border-top: 1px solid rgba(255, 255, 255, 0.3); /* Adjusted HR color for visibility */
+  }
+
+  .mt-4 {
+    margin-top: 20px; /* Adjusted margin top for better spacing */
+  }
+
+  .alert {
+    margin-bottom: 10px; /* Adjusted margin bottom for better separation */
+  }
+</style>
+{% endblock css %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <!-- side menu -->
+    <div class="col-1">
+      <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="staticBackdropLabel">
+            <img src="{% static 'img/logo1.jpg' %}" alt="Logo" class="ms-5 image-with-shadow" style="width: 150px; height: 55px;">
+          </h5>
+          <br>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <div>
+            <ul class="nav sidebar">
+              <li><a href=""><i class="fas fa-sign-in-alt"></i> Logout</a></li>
+              <li><a href=""><i class="fas fa-tachometer-alt"></i> IPT Status</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-auto p-5 con">
+      <div class="container con1 rounded">
+        <h5 class="big">Hi, {{ student.StudentName }}</h5>
+        <hr>
+        {% if student %}
+        <div class="row">
+          <div class="col-md-6 p-2">
+            <p class="card-text"><strong>Registration No:</strong>&nbsp;{{ student.RegNo }}</p>
+            <p class="card-text"><strong>Name:</strong>&nbsp;{{ student.StudentName }}</p>
+            <p class="card-text"><strong>Department:</strong>&nbsp;{{ program }}</p>
+            <p class="card-text"><strong>Section:</strong>&nbsp;{{ student.Section }}</p>
+            <p class="card-text"><strong>Batch:</strong>&nbsp;{{ student.Batch }}</p>
+          </div>
+        </div>
+        {% endif %}
+        <!-- Add additional user information as needed -->
+        {% if messages %}
+        <div class="mt-4">
+          <!-- Render messages if any -->
+          {% for message in messages %}
+          <div class="alert alert-danger" role="alert">
+            {{ message }}
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col d-flex justify-content-center align-items-center">
+
+    </div>
+  </div>
+
+  <!-- content -->
+</div>
+{% endblock content %}

@@ -1,0 +1,185 @@
+{%extends 'main/main.html'%}
+{% load static %}
+
+{%block title%}
+Profile
+{%endblock title%}
+
+{%block css%}
+<style>
+  body {
+    font-family: 'Times New Roman', Times, serif;
+    /* Use absolute path for background image */
+    background: url('{% static "/img/bg1.avif" %}') no-repeat fixed center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    color: whitesmoke;
+}
+
+.navbar {
+    position: relative;
+    /* Relative path is fine for the navbar background image */
+    background-image: url('{% static "img/S.png" %}');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;
+    z-index: 0;
+}
+/* Custom styles for the offcanvas menu */
+.offcanvas {
+    background-color: #ffffff; /* Change background color */
+    border: 1px solid #ced4da; /* Change border color */
+    border-radius: 10px; /* Adjust border radius */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Add box shadow */
+    width: 300px !important;
+}
+
+
+
+.offcanvas-body {
+    padding: 20px; /* Adjust padding */
+}
+
+/* Styles for links in offcanvas menu */
+.offcanvas-body a {
+    color: #000000; /* Change link color */
+    text-decoration: none; /* Remove underline */
+}
+
+.offcanvas-body a:hover {
+    color: #007bff; /* Change link color on hover */
+}
+
+{% comment %} .big{
+  font-size: 50px;
+} {% endcomment %}
+.con1{
+  background-color: rgba(32, 152, 209, 0.8);
+}
+</style>
+
+{%endblock css%}
+
+
+{%block content%}
+<div class="container-fluid">
+  <div class="row">
+      <!-- side menu -->
+      <div class="col-1">
+        <button class="btn btn-primary mt-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+          Menus
+        </button>
+        
+        <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="staticBackdropLabel">
+                <img  src="{% static 'img/logo1.jpg' %}" alt="Logo" class="ms-5 image-with-shadow" style="width: 150px; height: 55px;">
+            </h5>
+            <br>
+          
+
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          {% if role == 'hod' or role == 'staff' %}
+          <div class="offcanvas-body">
+            <div>
+              <ul class="nav sidebar">
+                <li><a href="{% url 'logout' %}"><i class="fas fa-sign-in-alt"></i> Logout</a></li>
+                <li><a href="{% url 'ipt_status' empid=employee.EmpId role=role%}"><i class="fas fa-tachometer-alt"></i> IPT Status</a></li>
+                <li><a  href="{% url 'ipt_companies' empid=employee.EmpId role=role %}"><i class="fas fa-user-plus"></i> IPT Companies</a></li>
+                <li><a  href="{% url 'mentors' empid=employee.EmpId role=role %}"><i class="fas fa-user-plus"></i> Mentors Allocation</a></li>
+
+              </ul>              </div>
+          </div>
+          {%else%}
+          <div class="offcanvas-body">
+            <div>
+              <ul class="nav sidebar">
+                <li><a href="{% url 'logout' %}"><i class="fas fa-sign-in-alt"></i> Logout</a></li> <br> <br>
+                <li><a href="{% url 'ipt_status' empid=employee.EmpId role=role%}"><i class="fas fa-tachometer-alt"></i> IPT Status</a></li> <br>
+                <li><a  href="{% url 'ipt_companies' empid=employee.EmpId role=role %}"><i class="fas fa-user-plus"></i> IPT Companies</a></li>
+                <li><a  href="{% url 'mentors' empid=employee.EmpId role=role %}"><i class="fas fa-user-plus"></i> Mentors Allocation</a></li>
+                <li><a  href="{% url 'Placenment' employee.EmpId role %}"><i class="fas fa-user-plus"></i> Placement Companies</a></li>
+                <li><a   href="{% url 'Placenmentstd' employee.EmpId role %}"><i class="fas fa-user-plus"></i> Placed Student</a></li>
+                <li><a   href="{% url 'views' employee.EmpId role %}"><i class="fas fa-user-plus"></i> Files</a></li>
+                
+
+
+              </ul>              </div>
+          </div>
+          {%endif%}
+        </div>
+      </div>
+
+      <div class="col-auto p-5 con">                  
+           
+          <div class="container con1 p-3">
+              <h4 class="big mt-1 mb-4">{{employee.EmpName}}</h4>
+              <hr>
+              {% if employee %}
+                      <h4 class="card-title mb-2">{{ employee.Designation }}</h4>
+                      <div class="row">
+                          <div class="col-md-6">
+                              <p class="card-text"><strong>Registration No:</strong> {{ employee.EmpId }}</p>
+                              <p class="card-text"><strong>Name:</strong> {{ employee.EmpName }}</p>
+
+                          </div>
+                         
+                          
+                      </div>
+                      <div class="row mt-3">
+                          <div class="col-md-12">
+                              <p class="card-text"><strong>Department:</strong> {{ employee.DepartmentCode }}</p>
+                          </div>
+                      </div>
+                  
+              
+              {% endif %}
+                              
+              
+
+              
+              <!-- Add additional user information as needed -->
+              {% if messages %}
+      <!-- Check if any messages are present -->
+      <div class="mt-4">
+          <!-- Render messages if any -->
+          {% for message in messages %}
+              <div class="alert alert-danger" role="alert">
+                  {{ message }}
+              </div>
+          {% endfor %}
+      </div>
+  {% endif %}
+            </div>
+            
+      </div>
+
+  </div>   
+  <div class="row">
+      <div class="col d-flex justify-content-center align-items-center">
+          
+      </div>
+  </div>
+
+      <!-- content -->
+</div>     
+
+{%endblock content%}
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
